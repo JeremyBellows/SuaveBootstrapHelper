@@ -42,11 +42,11 @@ type ColumnSize =
       | ExtraSmall width ->
         sprintf "col-xs-%s" width.ToClassString
       | Small width ->
-        sprintf "col-s-%s" width.ToClassString
+        sprintf "col-sm-%s" width.ToClassString
       | Medium width ->
-        sprintf "col-m-%s" width.ToClassString
+        sprintf "col-md-%s" width.ToClassString
       | Large width ->
-        sprintf "col-l-%s" width.ToClassString
+        sprintf "col-lg-%s" width.ToClassString
 
 let containerFluid attributes innerHtml =
   let attributes = attributes @ [ "class", "container-fluid" ]
@@ -60,7 +60,12 @@ let column (columnSizes : ColumnSize List) attributes innerHtml =
   let attributes =
     let columnClasses =
       columnSizes
-      |> List.map (fun column -> column.ToClassString)
+      |> List.map (fun column -> sprintf "%s " column.ToClassString)
       |> List.fold (+) " "
     attributes @ [ "class", columnClasses ]
   divAttr attributes innerHtml
+
+//example Column
+(*
+   column [ ExtraSmall Ten; Small Ten; Medium Ten; Large Ten; ] [ "id", "testId" ] []
+*)
